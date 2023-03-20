@@ -65,8 +65,7 @@ function generateGrid(number, lvlmode){
     gridInput.innerHTML = ''
     for (let i = 1; i <= number; i++){
         const grid = createGridItems(i, lvlmode)
-        gridInput.append(grid)
-        
+        gridInput.append(grid)     
     }
 }
 
@@ -90,15 +89,18 @@ function handleClick(){
     this.classList.add('bg-change')
     const itemContent = parseInt(this.textContent)
     console.log (itemContent)
-    let normalItemArray = []
+    const normalItemArray = []
     let normalItemNumber = parseInt(cellnumber) - 16
     if (bomb.includes(itemContent)) {
         this.style.backgroundColor = 'red'
         alert('perso')
+        removeEventListener('click', addFunctionToClick)
     } else if(!normalItemArray.includes(itemContent)){
         normalItemArray.push(itemContent)
+        console.log(normalItemArray);
         if (normalItemArray.length === parseInt(normalItemNumber)) {
             alert(`hai vinto, hai cliccato su ${normalItemNumber} caselle senza bomba`)
+            removeEventListener('click',addFunctionToClick)  
         }
     }
 }
