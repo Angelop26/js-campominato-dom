@@ -19,21 +19,31 @@ const gridInput = document.querySelector('.grid')
 const btn = document.querySelector('.play-button')
 const option = document.getElementById('difficult')
 // console.log(option.value);
+let bomb = []
+let cellnumber
 // LOGICA
 //creare la griglia al click del bottone 'play'
 btn.addEventListener('click', function(){
     let difficult = option.value
     if (difficult === 'easy'){
-        generateGrid(49, 'easy')
+        cellnumber = 49
+        generateGrid(cellnumber, 'easy')
+        generateBomb(cellnumber)
         addFunctionToClick('div.grid-item', handleClick)
 
     } else if(difficult === 'medium'){
-        generateGrid(81, 'medium')
+        cellnumber = 81
+        generateGrid(cellnumber, 'medium')
+        generateBomb(cellnumber)
         addFunctionToClick('div.grid-item', handleClick)
     } else if(difficult === 'hard'){
-        generateGrid(100, 'hard')
-        addFunctionToClick('div.grid-item', handleClick)
+        cellnumber = 100
+        generateGrid(cellnumber, 'hard')
+        generateBomb(cellnumber)
+        addFunctionToClick('div.grid-item',handleClick)
     }
+
+
 })
 
 // functions
@@ -49,7 +59,7 @@ function createGridItems(innerText, lvl){
 }
 
 /**
- * Description genera una griglia di 100 blocchi
+ * Description genera una griglia di number blocchi
 */
 function generateGrid(number, lvlmode){
     gridInput.innerHTML = ''
@@ -60,16 +70,56 @@ function generateGrid(number, lvlmode){
     }
 }
 
-function handleClick(){
-    this.classList.add('bg-change')
-    const itemContent = parseInt(this.textContent)
-    console.log (itemContent)
-}
-
-function addFunctionToClick(element, functionToInsert){
-    const arrayItems = document.querySelectorAll(element)
+/**
+ * richiamando domelement aggiunge il click e una funzione 
+ * @param {dom} domelement 
+ * @param {function} functionToInsert 
+ */
+function addFunctionToClick(domelement, functionToInsert){
+    const arrayItems = document.querySelectorAll(domelement)
     for(i = 0; i < arrayItems.length; i++){
         const currentItem = arrayItems[i]
         currentItem.addEventListener('click', functionToInsert)
     }
 }
+
+/**
+ * all'elemento selezionato aggiunge il background
+ */
+function handleClick(){
+    this.classList.add('bg-change')
+    const itemContent = parseInt(this.textContent)
+    console.log (itemContent)
+    let normalItemArray = []
+    let normalItemNumber = parseInt(cellnumber) - 16
+    if (bomb.includes(itemContent)) {
+        this.style.backgroundColor = 'red'
+        alert('perso')
+    } else if(!normalItemArray.includes(itemContent)){
+        normalItemArray.push(itemContent)
+        if (normalItemArray.length === parseInt(normalItemNumber)) {
+            alert(`hai vinto, hai cliccato su ${normalItemNumber} caselle senza bomba`)
+        }
+    }
+}
+
+/**
+ * genera un array di di numeri che saranno le posizioni delle bombe nella griglia
+ * @param {number} cellsGridNumber
+ * @returns bomb 
+ */
+function generateBomb(cellsGridNumber){
+    bomb=[]
+    while(bomb.length < 16){
+        const num = getRndInteger(1,cellsGridNumber)
+        if (!bomb.includes(num)){
+            bomb.push(num)
+        }
+    }
+    console.log(bomb);
+    return bomb
+}
+
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+  }
