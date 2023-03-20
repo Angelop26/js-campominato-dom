@@ -1,0 +1,68 @@
+/* RESET */
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: lightcoral;
+}
+
+.wrapper{
+    height: 100vh;
+}
+/* HEADER */
+.header{
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.play-button{
+    padding: 5px 10px;
+    margin-left: 20px;
+}
+
+/* MAIN */
+.container{
+    width: 800px;
+    height: calc(100% - 50px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;   
+}
+
+/* grid */
+.grid{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grid-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.bg-change{
+    background-color: skyblue;
+}
+.hard{
+    width: calc(800px / 10);
+    height: calc(800px / 10);
+}
+
+.medium{
+    width: calc(800px / 9);
+    height: calc(800px / 9);
+}
+
+.easy{
+    width: calc(800px / 7);
+    height: calc(800px / 7);
+}
